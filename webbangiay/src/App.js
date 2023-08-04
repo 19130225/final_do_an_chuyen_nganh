@@ -35,6 +35,7 @@ import ForgotPassWord from './page/ForgotPassWord';
 import ResetpassWord from './page/ResetpassWord';
 import PageNotError from './page/PageNotError';
 import FeedBack from './layout/FeedBack';
+import Info from './page/Info';
 
 
 
@@ -159,13 +160,15 @@ const initialOptions = {
      
         <Routes>
        
-          <Route exact path='/' element={< Home cartItemCount={cartItemCount}/ > }> </Route>
+          <Route exact path='/' element={< Home cartItemCount={cartItemCount}/>}> </Route>
           <Route className="node"  path='/feedback' element={<FeedBack />}></Route>
           <Route className="node"  path='/getProduct/:id' element={<ViewProduct />}></Route>
           <Route className="node"  path='/error' element={<PageNotError />}></Route>
           <Route exact path='/login' element={<Login cartItemCount={cartItemCount}/>}> </Route>
           <Route exact path='/register' element={<Register cartItemCount={cartItemCount}/>}> </Route>
           <Route exact path='/addProduct' element={<AddProduct/>}></Route>
+          <Route exact path='/info' element={<Info/>}></Route>
+
           
         <Route exact path="/doakboard" element={<Dankboad></Dankboad>} />
          
