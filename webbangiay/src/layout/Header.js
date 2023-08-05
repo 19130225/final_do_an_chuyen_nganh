@@ -267,6 +267,7 @@ export default function Header({cartItemCount}) {
             <div className="top-header-right">
            
                 <ul>
+                
                 {th!=null ?  ( roles && roles.length > 0 && roles[0].authority === 'ADMIN' ? (<li><a href="login.html">{themail}</a> <button className='button ' onClick={logout}>logout</button><span> </span><button className='button ' onClick={onDB}>Admin</button></li>):<li><a href="login.html">{themail}</a> <button className='button ' onClick={logout}>logout</button><span> </span></li>) :
                 <li> <Link className="btn btn-outline-secondary " type="submit" to="login">Login</Link> <span> </span>  <li><a href="register">Join</a></li></li>
               }
