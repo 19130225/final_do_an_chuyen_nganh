@@ -3,7 +3,15 @@ import ForgotPassWord from '../page/ForgotPassWord'
 import OrderHistory from '../page/OrderHistory'
 import FeedBack from './FeedBack'
 import axios from 'axios';
-
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 export default function Profile() {
     
     const name=localStorage.getItem("nameuser");
@@ -16,7 +24,27 @@ export default function Profile() {
     const [selectedWard, setSelectedWard] = React.useState("");
      const [chooseaddress, setChooseaddress] = React.useState("");
 
- 
+     const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+     const [openBR, setOpenBR] = React.useState(false);
+     const handleCloseBR = () => {
+       setOpenBR(false);
+     };
+     const handleOpenBR = () => {
+       setOpenBR(true);
+     };
     React.useEffect(() => {
       axios.get("http://localhost:3002/api").then((response) => {
         setCities(response.data);
@@ -141,14 +169,14 @@ export default function Profile() {
       }
 
 const onSupmit= async(e)=>{
-  
+  setOpenBR(true)
     const formData = new FormData();
     formData.append('email', email_tk);
     formData.append('firstName', user.firstname);
     formData.append('lastName', user.lastname);
-   
+    formData.append('chooseaddress', chooseaddress);
     formData.append('phone', user.phone);
-    formData.append('address',chooseaddress+user.address);
+    formData.append('address',user.address);
    
  
     const config = {
@@ -158,7 +186,10 @@ const onSupmit= async(e)=>{
     }
     e.preventDefault();
     await axios.put(`http://localhost:8080/api/v1/auth/users/updateUserSetting`,formData,config)
+    setOpenBR(false)
+    setOpen(true)
     loaddata()
+
     
    
    
@@ -187,11 +218,11 @@ const onSupmit= async(e)=>{
                     </a>
                     <a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab" aria-controls="security" aria-selected="false">
                         <i class="fa fa-user text-center mr-1"></i> 
-                        Security
+                        Order History
                     </a>
                     <a class="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab" aria-controls="application" aria-selected="false">
                         <i class="fa fa-tv text-center mr-1"></i> 
-                        Application
+                        Feed Back
                     </a>
                     <a class="nav-link" id="notification-tab" data-toggle="pill" href="#notification" role="tab" aria-controls="notification" aria-selected="false">
                         <i class="fa fa-bell text-center mr-1"></i> 
@@ -200,8 +231,17 @@ const onSupmit= async(e)=>{
                 </div>
             </div>
             <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+           
+            <Backdrop
+              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={openBR}
+              onClick={handleCloseBR}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
                 <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                    <form onSubmit={(e)=>onSupmit(e)}>
+                   
                    <h3 class="mb-4">Account Settings</h3>
                    <div class="row">
                        <div class="col-md-6">
@@ -340,6 +380,14 @@ const onSupmit= async(e)=>{
             </div>
         </div>
     </div>
+    <Stack spacing={2} sx={{ width: '100%' }}>
+    
+    <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+      <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        This is a success message!
+      </Alert>
+    </Snackbar>
+  </Stack>
 </section>
 
     </div>

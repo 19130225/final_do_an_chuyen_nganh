@@ -358,10 +358,11 @@ React.useEffect(
        
         <div>
         <div className="mid-header" >
-          
-    <div className="wrap" >
-        <div className="mid-grid-left logo mid-grid-left1"  >
        
+    <div className="wrap" >
+   
+        <div className="mid-grid-left logo mid-grid-left1"  >
+      
           
           <input
         id='ser'
@@ -371,7 +372,7 @@ React.useEffect(
          
           onFocus={() => setIsInputFocused(true)}
           onBlur={() => setIsInputFocused(false)}
-          placeholder="             Search for a product"
+          placeholder="       Search for a product"
         />
         {searchResults.length > 0 && (
           <div className="search-results-container">
@@ -510,7 +511,7 @@ React.useEffect(
                         <div className="product-pic">
                             <a href="#"><img src={"http://localhost:8080/images/img/"+row.img} title="product-name" /></a>
                             <p>
-                            <a href="#"><small>Nike</small> {row.name} FG</a>
+                            <a href="#"><small></small> {row.name} </a>
                             <span>Mens Firm-Ground Football Boot</span>
                             </p>
                         </div>

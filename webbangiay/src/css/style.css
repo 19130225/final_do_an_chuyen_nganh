@@ -229,13 +229,13 @@ body{
 	outline: none;
 	padding: 0.8em 0;
 	color:#A5A5A5;
-	width:85%;
+	width:50%;
 	-moz-transition: width 0.5s ease-out;
 	 -webkit-transition: width 0.5s ease-out;
 	 transition: width 0.5s ease-out;
 }
 .mid-grid-left input[type="text"]:focus {
- width:100%;
+ width:80%;
  -moz-transition: width 0.5s ease-out;
  -webkit-transition: width 0.5s ease-out;
  transition: width 0.5s ease-out;
