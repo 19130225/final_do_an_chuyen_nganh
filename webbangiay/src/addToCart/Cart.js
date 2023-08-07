@@ -196,7 +196,7 @@ function Cart({cartItems,onRemoveCartItem,setCartItems,oder,cartItemCount,getTot
       phone:localStorage.getItem("phone"),
       price:localStorage.getItem("total")
     }));
-    axios.post("http://localhost:8080/api/v1/auth/save", {cart: userForm, listProduct: cartItems})
+    axios.post("http://localhost:9200/api/v1/auth/save", {cart: userForm, listProduct: cartItems})
       .then((response) => {
         console.log(response.data);
         alert("Đã lưu giỏ hàng thành công!");
@@ -292,7 +292,7 @@ function Cart({cartItems,onRemoveCartItem,setCartItems,oder,cartItemCount,getTot
     
     {cartItems.map(item => (
       <div class="cart-item" id="item">
-        <img src={"http://localhost:8080/images/img/"+item.img} alt="" />
+        <img src={"http://localhost:9200/images/img/"+item.img} alt="" />
         <p>{item.name}</p>
         <p>${item.price}</p>
         <input
@@ -447,7 +447,7 @@ function Cart({cartItems,onRemoveCartItem,setCartItems,oder,cartItemCount,getTot
           <h5>Please select the quantity below</h5>
           {cartItems.map(item => (
           <div class="cart-item" id="item">
-            <img src={"http://localhost:8080/images/img/"+item.img} alt="" />
+            <img src={"http://localhost:9200/images/img/"+item.img} alt="" />
             <p>{item.name}</p>
             <p>${item.price}</p>
             <input

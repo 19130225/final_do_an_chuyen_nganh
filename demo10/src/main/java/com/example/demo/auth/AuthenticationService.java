@@ -5,26 +5,38 @@ import com.example.demo.Ex.CustomerNotFoundException;
 import com.example.demo.config.JwtService;
 import com.example.demo.model.Email;
 import com.example.demo.model.EmailUntilt;
+import com.example.demo.model.GoogleLoginRequest;
 import com.example.demo.token.Token;
 import com.example.demo.token.TokenRepository;
 import com.example.demo.token.TokenType;
 import com.example.demo.user.Role;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+import com.nimbusds.oauth2.sdk.AccessTokenResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
 import org.webjars.NotFoundException;
 
 import javax.management.relation.InvalidRoleInfoException;
 import javax.swing.text.Utilities;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +46,8 @@ public class AuthenticationService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  private final OAuth2AuthorizedClientService authorizedClientService;
+
 
   public AuthenticationResponse register(RegisterRequest request) {
     var user = User.builder()
@@ -49,6 +63,103 @@ public class AuthenticationService {
     return AuthenticationResponse.builder()
         .token(jwtToken)
         .build();
+  }
+
+//  public AuthenticationResponse authenticateWithGoogle(HttpServletRequest request) {
+//    // Kiểm tra xem người dùng đã xác thực thông qua OAuth2 chưa
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    if (authentication instanceof OAuth2AuthenticationToken) {
+//      OAuth2AuthenticationToken oauth2Authentication = (OAuth2AuthenticationToken) authentication;
+//
+//      OAuth2User principal = oauth2Authentication.getPrincipal();
+//      String email = principal.getAttribute("email");
+//      if (email == null || email.isEmpty()) {
+//        throw new IllegalArgumentException("Không tìm thấy email từ Google OAuth2.");
+//      }
+//
+//      var user = repository.findByEmail(email);
+//      if (user.isEmpty()) {
+//        // Nếu email chưa tồn tại, bạn có thể tạo một người dùng mới với thông tin từ Google.
+//        var newUser = createUserFromGoogleInfo(principal.getAttributes());
+//        repository.save(newUser);
+//        user = Optional.of(newUser);
+//      }
+//
+//      if (user.isPresent()) {
+//        var jwtToken = jwtService.generateToken(user.get());
+//        revokeAllUserTokens(user.get());
+//        saveUserToken(user.get(), jwtToken);
+//
+//        return AuthenticationResponse.builder()
+//                .token(jwtToken)
+//                .type("Bearer")
+//                .id(user.get().getId())
+//                .email(user.get().getEmail())
+//                .firstname(user.get().getFirstname())
+//                .lastname(user.get().getLastname())
+//                .roles(user.get().getAuthorities())
+//                .build();
+//      }
+//    }
+//
+//    // Trả về giá trị mặc định hoặc null nếu không xác thực bằng OAuth2
+//    return null;
+//  }
+
+
+  private User createUserFromGoogleInfo(Map<String, Object> googleAttributes) {
+    String email = (String) googleAttributes.get("email");
+    String firstName = (String) googleAttributes.get("given_name");
+    String lastName = (String) googleAttributes.get("family_name");
+
+    return User.builder()
+            .email(email)
+            .firstname(firstName)
+            .lastname(lastName)
+            .role(Role.USER)
+            .build();
+  }
+
+  public AuthenticationResponse authenticateWithGoogle(@RequestBody GoogleLoginRequest request) {
+    // Lấy thông tin người dùng từ frontend
+    String email = request.getEmail();
+    String givenName = request.getGivenName();
+    String familyName = request.getFamilyName();
+
+    // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu hay chưa
+    Optional<User> existingUser = repository.findByEmail(email);
+    User user;
+    if (existingUser.isPresent()) {
+      // Nếu người dùng đã tồn tại, cập nhật thông tin từ frontend và lưu vào cơ sở dữ liệu
+      user = existingUser.get();
+      user.setFirstname(givenName);
+      user.setLastname(familyName);
+      // Cập nhật các thông tin khác nếu cần
+    } else {
+      // Nếu người dùng chưa tồn tại, tạo mới và lưu vào cơ sở dữ liệu
+      user = User.builder()
+              .firstname(givenName)
+              .lastname(familyName)
+              .email(email)
+              .role(Role.USER)
+              .build();
+    }
+    repository.save(user);
+
+    // Tạo token và lưu vào cơ sở dữ liệu
+    String jwtToken = jwtService.generateToken(user);
+    saveUserToken(user, jwtToken);
+
+    // Trả về thông tin đăng nhập thành công
+    return AuthenticationResponse.builder()
+            .token(jwtToken)
+            .type("Bearer")
+            .id(user.getId())
+            .email(user.getEmail())
+            .firstname(user.getFirstname())
+            .lastname(user.getLastname())
+            .roles(user.getAuthorities())
+            .build();
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -245,4 +356,8 @@ public class AuthenticationService {
     });
     tokenRepository.saveAll(validUserTokens);
   }
+
+
+
+
 }

@@ -46,7 +46,7 @@ export default function EditProduct(props) {
       }
     }
     e.preventDefault();
-    await axios.put(`http://localhost:8080/api/v1/auth/editProduct/${id}`,formData,config)
+    await axios.put(`http://localhost:9200/api/v1/auth/editProduct/${id}`,formData,config)
     
     props.handleCloseED()
     props.handleAddProduct()
@@ -57,7 +57,7 @@ export default function EditProduct(props) {
   const loadUser =async()=>{
    
     setUser(props.product)
-    setImageSrc("http://localhost:8080/images/img/"+props.product.img);
+    setImageSrc("http://localhost:9200/images/img/"+props.product.img);
   }
   const handleFileUpload = (e) => {
     const file = e.target.files[0];

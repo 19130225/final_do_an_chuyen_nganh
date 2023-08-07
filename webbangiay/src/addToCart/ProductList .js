@@ -8,7 +8,7 @@ function ProductList() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/v1/auth/get3ProductNew')
+    fetch('http://localhost:9200/api/v1/auth/get3ProductNew')
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error(err));

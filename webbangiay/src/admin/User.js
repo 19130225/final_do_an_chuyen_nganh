@@ -50,7 +50,7 @@ export default function User() {
   };
     const[users,setUsers]=useState([]);
     const loadUsers= async () =>{
-        const result=await axios.get("http://localhost:8080/api/v1/auth/users/userAll");
+        const result=await axios.get("http://localhost:9200/api/v1/auth/users/userAll");
        setUsers(result.data);
         
     
@@ -152,7 +152,7 @@ export default function User() {
      
      
       axios
-        .put(`http://localhost:8080/api/v1/auth/users/updateRole?email=${email}&role=${encodedValue}`)
+        .put(`http://localhost:9200/api/v1/auth/users/updateRole?email=${email}&role=${encodedValue}`)
         .then((response) => {
          
           

@@ -11,7 +11,7 @@ const ButtonPaypal=({getTotal,userForm,cartItems})=>{
       return;
     }
    
-    axios.post("http://localhost:8080/api/v1/auth/save", {cart: userForm, listProduct: cartItems})
+    axios.post("http://localhost:9200/api/v1/auth/save", {cart: userForm, listProduct: cartItems})
       .then((response) => {
         console.log(response.data);
         alert("Đã lưu giỏ hàng thành công!");

@@ -54,7 +54,7 @@ export default function FeedBack() {
           }
         }
         e.preventDefault();
-        await axios.post("http://localhost:8080/api/v1/auth/postFeedBack",formData,config)
+        await axios.post("http://localhost:9200/api/v1/auth/postFeedBack",formData,config)
        setOpenBR(false)
        setOpen(true)
 

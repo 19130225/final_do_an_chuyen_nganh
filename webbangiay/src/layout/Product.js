@@ -29,7 +29,7 @@ const [query, setQuery] = React.useState('idle');
 const timerRef = React.useRef();
 const iduser = localStorage.getItem("id");
 const addCart=()=>{
-  fetch(`http://localhost:8080/api/v1/auth/addCart?id=3`)
+  fetch(`http://localhost:9200/api/v1/auth/addCart?id=3`)
   .then(res => res.json())
   .then(
     (result) => {
@@ -95,7 +95,7 @@ React.useEffect(
     // similar to componentDidMount()
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const baseURL = "http://localhost:8080/api/v1/auth/get3ProductNew";
+    const baseURL = "http://localhost:9200/api/v1/auth/get3ProductNew";
     const [rows, setRows] = useState([]);
     const [rowdata, setRowdata] = useState([]);
   
@@ -129,7 +129,7 @@ React.useEffect(
   
   
     useEffect(() => {
-      fetch("http://localhost:8080/api/v1/auth/get3ProductNew")
+      fetch("http://localhost:9200/api/v1/auth/get3ProductNew")
         .then(res => res.json())
         .then(
           (result) => {
@@ -147,7 +147,7 @@ React.useEffect(
     }, [])
     const clickCart1=()=>{
       const count =document.getElementsByClassName("count").length +3;
-      fetch(`http://localhost:8080/api/v1/auth/getNext3Product/${count}/0`)
+      fetch(`http://localhost:9200/api/v1/auth/getNext3Product/${count}/0`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -314,7 +314,7 @@ React.useEffect(
                            
                         </div>
                         <div className="product-pic">
-                            <a href="#"><img src={"http://localhost:8080/images/img/"+row.img} title="product-name" /></a>
+                            <a href="#"><img src={"http://localhost:9200/images/img/"+row.img} title="product-name" /></a>
                             <p>
                             <a href="#"><small>Nike</small> {row.name} FG</a>
                             <span>Mens Firm-Ground Football Boot</span>

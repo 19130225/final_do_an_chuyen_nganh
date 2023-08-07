@@ -80,7 +80,7 @@ handleOpen()
       }
     }
     e.preventDefault();
-    await axios.post("http://localhost:8080/api/v1/auth/addproduct",formData,config)
+    await axios.post("http://localhost:9200/api/v1/auth/addproduct",formData,config)
     const product = { name, img };
     props.handleAddProduct();
     handleClose()

@@ -24,7 +24,7 @@ function ProductDetail({onAddToCart,cartItemCount,open,handleClose,Alert,handleC
   const { id } = useParams();
   const [value, setValue] = React.useState(4);
   useEffect(() => {
-    fetch(`http://localhost:8080/api/v1/auth/getProduct/${id}`)
+    fetch(`http://localhost:9200/api/v1/auth/getProduct/${id}`)
       .then(res => res.json())
       .then(data => setProduct(data))
       .catch(err => console.error(err));
@@ -74,7 +74,7 @@ function ProductDetail({onAddToCart,cartItemCount,open,handleClose,Alert,handleC
     
       <div className="row1">
         <div className="col1">
-          <img src={"http://localhost:8080/images/img/"+product.img} alt="" srcset="" />
+          <img src={"http://localhost:9200/images/img/"+product.img} alt="" srcset="" />
 
         </div>
         <div className="col2">

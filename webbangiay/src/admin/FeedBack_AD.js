@@ -26,7 +26,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function FeedBack_AD() {
     const[chat,setChat]=React.useState([]);
     const loadChat= async () =>{
-        const result=await axios.get("http://localhost:8080/api/v1/auth/listFeedBack");
+        const result=await axios.get("http://localhost:9200/api/v1/auth/listFeedBack");
        setChat(result.data);
         
     
@@ -43,7 +43,7 @@ export default function FeedBack_AD() {
                }
              }
              e.preventDefault();
-             await axios.put("http://localhost:8080/api/v1/auth/putFeedBack",formData,config)
+             await axios.put("http://localhost:9200/api/v1/auth/putFeedBack",formData,config)
           loadChat()
           setOpen(false)
      

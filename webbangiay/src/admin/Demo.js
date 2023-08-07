@@ -66,7 +66,7 @@ export default function Demo() {
   };
   
   const loadUsers= async () =>{
-    const result=await axios.get("http://localhost:8080/api/v1/auth/students1"
+    const result=await axios.get("http://localhost:9200/api/v1/auth/students1"
      );
    setUsers(result.data);
     
@@ -173,7 +173,7 @@ console.log(test)
   
   const deleteProduct= async (id) =>{
     handleOpenBR()
-    const result=await axios.delete(`http://localhost:8080/api/v1/auth/deleteProduct/${id}`);
+    const result=await axios.delete(`http://localhost:9200/api/v1/auth/deleteProduct/${id}`);
   loadUsers()
   handleCloseBR();
     
@@ -181,7 +181,7 @@ console.log(test)
 };
 const editProduct= async (id) =>{
   handleOpenBR()
-  const result=await axios.get(`http://localhost:8080/api/v1/auth/getProduct/${id}`);
+  const result=await axios.get(`http://localhost:9200/api/v1/auth/getProduct/${id}`);
   setProduct(result.data)
   handleClickOpenED();
   handleCloseBR();
@@ -292,7 +292,7 @@ const handleCloseED = () => {
         ).map((row) => (
           <TableRow key={row.id}>
             <TableCell style={{ width: 160 }}>
-             <img className='img_ad' src= {"http://localhost:8080/images/img/"+row.img}></img>
+             <img className='img_ad' src= {"http://localhost:9200/images/img/"+row.img}></img>
             </TableCell>
             <TableCell style={{ width: 160 }} align="right">
               {row.name}

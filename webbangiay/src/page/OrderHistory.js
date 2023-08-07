@@ -43,7 +43,7 @@ export default function OrderHistory({cartItemCount}) {
       // Xử lý submit
      
 
-      axios(`http://localhost:8080/api/v1/auth/updateStatusHuy?id=${id}
+      axios(`http://localhost:9200/api/v1/auth/updateStatusHuy?id=${id}
       `, {
         method: "PUT", 
         data: {
@@ -77,7 +77,7 @@ export default function OrderHistory({cartItemCount}) {
       
     }, []);
     const loadOder = (d)=>{
-      fetch(`http://localhost:8080/api/v1/auth/order/${iduser}`)
+      fetch(`http://localhost:9200/api/v1/auth/order/${iduser}`)
       .then(res => res.json())
       .then(data => setOrder(data))
       .catch(err => console.error(err));
@@ -86,7 +86,7 @@ export default function OrderHistory({cartItemCount}) {
     const oderDetailID = (d)=>{
       handleOpenL();
       handleClickOpen();
-      fetch(`http://localhost:8080/api/v1/auth/cart/${d}`)
+      fetch(`http://localhost:9200/api/v1/auth/cart/${d}`)
         .then(res => res.json())
         .then(data => setOrderDetail(data))
         .catch(err => console.error(err));
@@ -154,7 +154,7 @@ export default function OrderHistory({cartItemCount}) {
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-2">
-                        <img src={"http://localhost:8080/images/img/"+product.img}
+                        <img src={"http://localhost:9200/images/img/"+product.img}
                           class="img-fluid" alt=""/>
                       </div>
                       <div class="col-md-2 text-center d-flex justify-content-center align-items-center">

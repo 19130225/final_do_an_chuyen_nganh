@@ -6,7 +6,7 @@ export default function ListProduct() {
 
   useEffect(() => {
     // Gọi API để lấy danh sách sản phẩm
-    fetch('http://localhost:8080/api/v1/auth/get3ProductNew')
+    fetch('http://localhost:9200/api/v1/auth/get3ProductNew')
       .then(response => response.json())
       .then(products => {
         setProducts(products);

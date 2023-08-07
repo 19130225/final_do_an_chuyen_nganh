@@ -23,7 +23,7 @@
 //   // similar to componentDidMount()
   
 //   useEffect(() => {
-//     fetch("http://localhost:8080/api/v1/auth/get3ProductNew")
+//     fetch("http://localhost:9200/api/v1/auth/get3ProductNew")
 //       .then(res => res.json())
 //       .then(
 //         (result) => {
@@ -41,7 +41,7 @@
 //   }, [])
   
 //   const clickCart1=()=>{
-//     fetch(`http://localhost:8080/getNext3Product/${count}/0`)
+//     fetch(`http://localhost:9200/getNext3Product/${count}/0`)
 //     .then(res => res.json())
 //     .then(
 //       (result) => {

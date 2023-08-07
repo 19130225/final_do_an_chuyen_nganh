@@ -57,6 +57,18 @@ public class SecurityConfiguration {
       http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
       http.cors().and().csrf().disable();
 
+      // Cấu hình xác thực OAuth2 với Google
+      http.oauth2Login()
+              .authorizationEndpoint()
+              .baseUri("/login/oauth2/authorize")
+              .and()
+              .redirectionEndpoint()
+              .baseUri("/login/oauth2/code/*")
+              .and()
+              .defaultSuccessUrl("/api/v1/auth/login/success")
+              .failureUrl("/api/v1/auth/login/failure")
+              .loginPage("/api/v1/auth/login");
+
 //        .logout()
 //        .logoutUrl("/api/v1/auth/logout")
 //        .addLogoutHandler(logoutHandler)

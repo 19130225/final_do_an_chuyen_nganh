@@ -23,7 +23,7 @@ export default function ResetpassWord() {
   }
     const {token}=useParams();
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/v1/auth/reset_password/${token}`)
+        axios.get(`http://localhost:9200/api/v1/auth/reset_password/${token}`)
           .then(response => {
             if(response.data==="reset_password_form"){
                 alert("ok")
@@ -47,7 +47,7 @@ export default function ResetpassWord() {
               }
             }
             e.preventDefault();
-            await axios.put("http://localhost:8080/api/v1/auth/users/updatePass",formData,config)
+            await axios.put("http://localhost:9200/api/v1/auth/users/updatePass",formData,config)
             navigate("/login")
             setOpenBR(false)
 

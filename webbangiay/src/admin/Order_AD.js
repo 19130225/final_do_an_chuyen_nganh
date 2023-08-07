@@ -89,7 +89,7 @@ export default function Order_AD() {
 
   
         axios
-          .put(`http://localhost:8080/api/v1/auth/updateStatus?status=${encodedValue}&id=${id}`, { id: id, status: encodedValue })
+          .put(`http://localhost:9200/api/v1/auth/updateStatus?status=${encodedValue}&id=${id}`, { id: id, status: encodedValue })
           .then((response) => {
             setOpenBR(false)
             setOpenAlert(true);
@@ -141,7 +141,7 @@ export default function Order_AD() {
     const oderDetailID = (d)=>{
       handleOpenL();
       handleClickOpen();
-      fetch(`http://localhost:8080/api/v1/auth/cart/${d}`)
+      fetch(`http://localhost:9200/api/v1/auth/cart/${d}`)
         .then(res => res.json())
         .then(data => setOrderDetail(data))
         .catch(err => console.error(err));    
@@ -190,7 +190,7 @@ export default function Order_AD() {
     };
 
     const loadUsers= async () =>{
-        const result=await axios.get("http://localhost:8080/api/v1/auth/viewAllOrder");
+        const result=await axios.get("http://localhost:9200/api/v1/auth/viewAllOrder");
        setOrder(result.data);
         
     
@@ -203,7 +203,7 @@ export default function Order_AD() {
       setSelectedDate(formattedDate);
   
       try {
-        const response = await axios.get(`http://localhost:8080/api/v1/auth/viewOrderAdmin?date=${formattedDate}`);
+        const response = await axios.get(`http://localhost:9200/api/v1/auth/viewOrderAdmin?date=${formattedDate}`);
        
         const data = response.data;
         setOrder(data);
@@ -498,7 +498,7 @@ export default function Order_AD() {
             <div class="card-body">
               <div class="row">
                 <div class="col-md-2">
-                  <img src= {"http://localhost:8080/images/img/"+product.img}
+                  <img src= {"http://localhost:9200/images/img/"+product.img}
                     class="img-fluid" alt=""/>
                 </div>
                 <div class="col-md-2 text-center d-flex justify-content-center align-items-center">

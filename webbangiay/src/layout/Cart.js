@@ -34,13 +34,13 @@
 //       },[])
       
 //       // const loadProduct1=async()=>{
-//       //   const result=await axios.get(`http://localhost:8080/api/v1/auth/addCart/2`)
+//       //   const result=await axios.get(`http://localhost:9200/api/v1/auth/addCart/2`)
 //       //   setUser(result.data)
 //       //   console.log(result.data)
 //       // }
 //       const loadProduct=async()=>{
 //         cookies.set('JSESSIONID', '14A4C26E22AEFEF5A108F6FEFC978BED', { path: '/' });
-//         const result=await axios.get(`http://localhost:8080/api/v1/auth/addCart/${id}`)
+//         const result=await axios.get(`http://localhost:9200/api/v1/auth/addCart/${id}`)
 //        console.log(result.data)
        
        
@@ -50,7 +50,7 @@
 //         const add=()=>{
 //           cookies.set('JSESSIONID', '14A4C26E22AEFEF5A108F6FEFC978BED', { path: '/' });
        
-//           fetch(`http://localhost:8080/api/v1/auth/addCart/${id}`, {
+//           fetch(`http://localhost:9200/api/v1/auth/addCart/${id}`, {
 //             method: "GET",
           
 //           })
@@ -67,7 +67,7 @@
 //           const setCart = () => {
       
 
-//             axios(`http://localhost:8080/api/v1/auth/addCart/${id}`, {
+//             axios(`http://localhost:9200/api/v1/auth/addCart/${id}`, {
 //               method: "GET", 
              
 //             })
@@ -87,7 +87,7 @@
 //          }
 //           const clickCart2=()=>{
 //             cookies.set('JSESSIONID', '14A4C26E22AEFEF5A108F6FEFC978BED', { path: '/' });
-//             fetch(`http://localhost:8080/api/v1/auth/addCart/${id}`,{
+//             fetch(`http://localhost:9200/api/v1/auth/addCart/${id}`,{
 //               method: "POST"
 //             })
             

@@ -89,7 +89,7 @@ export default function Register({cartItemCount}) {
           // Xử lý submit
           handleOpen()
   
-          axios(`http://localhost:8080/api/v1/auth/register`, {
+          axios(`http://localhost:9200/api/v1/auth/register`, {
             method: "POST", 
             data: {
                 firstname:firstname,

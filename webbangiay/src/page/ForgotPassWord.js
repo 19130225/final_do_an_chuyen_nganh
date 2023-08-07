@@ -48,7 +48,7 @@ export default function ForgotPassWord() {
         }
       }
       e.preventDefault();
-      await axios.get(`http://localhost:8080/api/v1/auth/users/forotPass?email=${email}`,formData,config)
+      await axios.get(`http://localhost:9200/api/v1/auth/users/forotPass?email=${email}`,formData,config)
       setOpenBR(false)
       setOpen(true)
      

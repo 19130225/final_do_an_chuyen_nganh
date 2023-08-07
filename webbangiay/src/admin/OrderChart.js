@@ -19,7 +19,7 @@ const SalesChart = () => {
     setSelectedDate(formattedDate);
 
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/auth/viewChart?date=${formattedDate}`);
+      const response = await axios.get(`http://localhost:9200/api/v1/auth/viewChart?date=${formattedDate}`);
      
       const data = response.data;
       setOrder(data);

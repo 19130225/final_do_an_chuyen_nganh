@@ -1,7 +1,9 @@
 package com.example.demo.auth;
 
+import com.example.demo.model.GoogleLoginRequest;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -66,5 +68,22 @@ public class AuthenticationController {
   @PutMapping("/users/updatePass")
   public void updatePass(@RequestParam("token") String token, @RequestParam("passnew") String passnew) {
     authenticationService.updatePassword(token,passnew);
+  }
+
+  @GetMapping("/login/success")
+  public ResponseEntity<String> loginSuccess() {
+    return ResponseEntity.ok("Đăng nhập thành công!");
+  }
+
+  @GetMapping("/login/failure")
+  public ResponseEntity<String> loginFailure() {
+    return ResponseEntity.ok("Đăng nhập thất bại!");
+  }
+
+  // Endpoint để xác thực bằng Google
+  @PostMapping("/login/google")
+  public ResponseEntity<AuthenticationResponse> authenticateWithGoogle(@RequestBody GoogleLoginRequest request) {
+    AuthenticationResponse response = authenticationService.authenticateWithGoogle(request);
+    return ResponseEntity.ok(response);
   }
 }

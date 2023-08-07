@@ -12,7 +12,7 @@ const [cart, setCart] = useState([]);
 
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/v1/auth/getProduct/${id}`)
+    axios.get(`http://localhost:9200/api/v1/auth/getProduct/${id}`)
       .then(response => {
         setProducts(response.data);
       })
