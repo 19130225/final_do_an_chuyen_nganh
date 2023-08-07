@@ -22,9 +22,11 @@ private  long id;
     private String email;
     private String password;
     private String resetPasswordToken;
+    private String phone;
+    private String address;
     private Collection<? extends GrantedAuthority> roles;
 
-    public AuthenticationResponse(long id, String token, String type, String firstname, String lastname, String email, String password,String resetPasswordToken, Collection<? extends GrantedAuthority> roles) {
+    public AuthenticationResponse(long id, String token, String type, String firstname, String lastname, String email, String password,String resetPasswordToken,String phone,String address, Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.token = token;
         this.type = type;
@@ -33,7 +35,25 @@ private  long id;
         this.email = email;
         this.password = password;
         this.resetPasswordToken = resetPasswordToken;
+        this.phone = phone;
+        this.address = address;
         this.roles = roles;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public long getId() {

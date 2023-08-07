@@ -22,10 +22,16 @@ import org.webjars.NotFoundException;
 
 import javax.management.relation.InvalidRoleInfoException;
 import javax.swing.text.Utilities;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -60,6 +66,21 @@ public class AuthenticationService {
     );
     var user = repository.findByEmail(request.getEmail())
         .orElseThrow();
+//    if(user==null){
+//      var jwtToken = jwtService.generateToken(user);
+//      revokeAllUserTokens(user);
+//      saveUserToken(user, jwtToken);
+//      return AuthenticationResponse.builder()
+//              .token(jwtToken)
+//              .type("Beerer")
+//              .id(user.getId())
+//              .email(user.getEmail())
+//              .firstname(user.getFirstname())
+//              .lastname(user.getLastname())
+//              .roles(user.getAuthorities())
+//
+//              .build();
+//    }
     var jwtToken = jwtService.generateToken(user);
     revokeAllUserTokens(user);
     saveUserToken(user, jwtToken);
@@ -73,6 +94,7 @@ public class AuthenticationService {
             .roles(user.getAuthorities())
 
         .build();
+  //  return null;
   }
   public void updateUserRole(String email, String newRole) {
     User user = repository.findByEmail(email)
@@ -88,6 +110,19 @@ public class AuthenticationService {
     user.setRole(Role.valueOf(newRole)); // Gán enum Role vào trường role
     repository.save(user);
   }
+  public void updateUserSetting(String email, String firtName,String lastName,String phone,String address) {
+    User user = repository.findByEmail(email)
+            .orElseThrow(() -> new NotFoundException("User not found"));
+
+
+
+    user.setFirstname(firtName);
+    user.setLastname(lastName);
+    user.setPhone(phone);
+    user.setAddress(address);
+
+    repository.save(user);
+  }
   public List<AuthenticationResponse> findAll() {
     List<User> users = repository.findAll();
     List<AuthenticationResponse> responses = new ArrayList<>();
@@ -100,6 +135,8 @@ public class AuthenticationService {
               .email(user.getEmail())
               .firstname(user.getFirstname())
               .lastname(user.getLastname())
+              .phone(user.getPhone())
+              .address(user.getAddress())
               .roles(user.getAuthorities())
               .build();
 
@@ -162,12 +199,12 @@ public class AuthenticationService {
       email1.setSubject(" :");
       StringBuilder sb= new StringBuilder();
       sb.append("<p>Hello,</p>\n" +
-              "            + \"<p>You have requested to reset your password.</p>\"\n" +
-              "            + \"<p>Click the link below to change your password:</p>\"\n" +
-              "            + \"<p><a href=\"" + resetPassWord + "\">Change my password</a></p>\"\n" +
-              "            + \"<br>\"\n" +
-              "            + \"<p>Ignore this email if you do remember your password, \"\n" +
-              "            + \"or you have not made the request.</p>\"").append("<br>");
+              "             \"<p>You have requested to reset your password.</p>\"\n" +
+              "             \"<p>Click the link below to change your password:</p>\"\n" +
+              "             \"<p><a href=\"" + resetPassWord + "\">Change my password</a></p>\"\n" +
+              "             \"<br>\"\n" +
+              "             \"<p>Ignore this email if you do remember your password, \"\n" +
+              "             \"or you have not made the request.</p>\"").append("<br>");
 
 
       email1.setContent(sb.toString());
@@ -196,6 +233,8 @@ public class AuthenticationService {
             .email(user.getEmail())
             .firstname(user.getFirstname())
             .lastname(user.getLastname())
+            .address(user.getAddress())
+            .phone(user.getPhone())
             .roles(user.getAuthorities())
 
             .build();

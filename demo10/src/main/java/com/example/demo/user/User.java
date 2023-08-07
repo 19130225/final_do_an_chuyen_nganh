@@ -29,17 +29,64 @@ public class User implements UserDetails {
   @Id
   @GeneratedValue
   private Integer id;
+  private String userId;
   private String firstname;
   private String lastname;
   private String email;
   private String password;
-
+  private String address;
+  private String phone;
   private String resetPasswordToken;
   @Enumerated(EnumType.STRING)
   private Role role;
 
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
+
+  public User(String userId, String firstname, String email) {
+    this.userId = userId;
+    this.firstname = firstname;
+    this.email = email;
+  }
+
+  public User(String userId, String firstname, String email, Role role) {
+    this.userId = userId;
+    this.firstname = firstname;
+    this.email = email;
+    this.role = role;
+  }
+
+  public User(Integer id, String userId, String firstname, String email, Role role) {
+    this.id = id;
+    this.userId = userId;
+    this.firstname = firstname;
+    this.email = email;
+    this.role = role;
+  }
+
+  public User(String firstname, String lastname, String email, String address, String phone) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.email = email;
+    this.address = address;
+    this.phone = phone;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,6 +107,14 @@ public class User implements UserDetails {
   @Override
   public boolean isAccountNonExpired() {
     return true;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   @Override

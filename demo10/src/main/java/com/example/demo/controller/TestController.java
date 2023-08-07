@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.model.reportStart;
 import java.util.List;
 import com.example.demo.Ex.UserNotFoundException;
 import java.util.Optional;
@@ -352,6 +352,47 @@ if(!productRepository.existsById(id)){
             return cartRepository.save(c);
         }).orElseThrow(()-> new CartNotFoundException(id));
         return cart;
+
+    }
+@Autowired reportStartRepository reportStartRepository;
+    @GetMapping("/getReport/{id}/{iduser}")
+    public Boolean getReportById(@PathVariable("id") String id ,@PathVariable("iduser") String iduser){
+
+        List<reportStart> re = reportStartRepository.findReprotByProductID(id);
+        for (reportStart ca : re){
+            if(ca.getProductID().equals(id)&& ca.getUserID().equals(iduser)){
+                return true;
+            }
+        }
+        return false;
+
+    }
+    @PostMapping("/addReportStar/{id}")
+    public ResponseEntity<String> addReportStar(@RequestParam("userID") String userID,
+                                                @PathVariable("id") String id,
+                                             @RequestParam("report") double report,
+                                             HttpServletRequest request) throws IOException {
+
+
+        reportStart re = new reportStart(userID,id,report);
+        reportStartRepository.save(re);
+        double sum=0;
+        int count = 0;
+
+        List<reportStart> reList = reportStartRepository.findReprotByProductID(id);
+        for (reportStart ca : reList){
+            sum+=ca.getReport();
+            count=reList.size();
+        }
+        Product product = productRepository.findById(Integer.valueOf(id)).orElse(null);
+
+
+        product.setReportStart(String.valueOf(sum/count));
+
+
+        productRepository.save(product);
+
+        return ResponseEntity.ok("Thêm sản phẩm thành công!");
 
     }
 

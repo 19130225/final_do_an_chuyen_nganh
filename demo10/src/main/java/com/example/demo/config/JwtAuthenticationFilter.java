@@ -19,12 +19,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private final JwtService jwtService;
   private final UserDetailsService userDetailsService;
   private final TokenRepository tokenRepository;
+  public JwtAuthenticationFilter(JwtService jwtService, TokenRepository tokenRepository, UserDetailsService userDetailsService) {
+    this.jwtService = jwtService;
+    this.tokenRepository = tokenRepository;
+    this.userDetailsService = userDetailsService;
+  }
 
   @Override
   protected void doFilterInternal(

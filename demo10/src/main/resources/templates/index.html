@@ -1,0 +1,11 @@
+<html>
+<header></header>
+<body>
+<th:block th:each="user : ${userList}">
+	<p th:text="${user.name}">[User Name]</p>
+	<img th:src="@{'/static/'+${user.img}}" />
+	<img src="images/product1.jpg" />
+</th:block>
+
+</body>
+</html>

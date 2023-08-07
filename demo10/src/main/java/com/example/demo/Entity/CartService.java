@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 
+import com.example.demo.Ex.CartNotFoundException;
 import com.example.demo.model.Email;
 import com.example.demo.model.EmailUntilt;
 import com.example.demo.reposity.CartItemRepository;
@@ -27,6 +28,8 @@ public class CartService {
 
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Autowired
     private CartItemRepository cartItemRepository;
@@ -58,7 +61,12 @@ public class CartService {
             cartItem.setPrice(itemJsonObject.get("price").getAsDouble());
             cartItem.setQuantity(itemJsonObject.get("quantity").getAsInt());
             cartItem.setImg(itemJsonObject.get("img").getAsString());
+            cartItem.setId_product(itemJsonObject.get("id").getAsInt());
             cartItem.setCart(cart);
+//            String idcart=String.valueOf(cartItem.setId(itemJsonObject.get("id").getAsLong()));
+//            Product p = productRepository.findById(Integer.parseInt(idcart)).orElse(null);
+//            p.setQuantity(0);
+//            productRepository.save(p);
 
             cartItems.add(cartItem);
         }
@@ -69,7 +77,22 @@ public class CartService {
 
         cartRepository.save(cart);
 
+        for (CartItem cartItem : cartItems) {
+            String productId = String.valueOf(cartItem.getId_product());
+            int quantity = cartItem.getQuantity();
 
+
+            Product product = productRepository.findById(Integer.valueOf(productId)).orElse(null);
+
+                int currentStock = product.getQuantity();
+                int updatedStock = currentStock - quantity;
+                product.setQuantity(updatedStock);
+
+
+                productRepository.save(product);
+                System.out.println(productId);
+
+        }
 
 
 

@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.example.demo.Entity.user;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +16,7 @@ import java.util.HashSet;
 @SpringBootApplication
 //@EnableWebSecurity
 //@EnableJpaRepositories
-
+//@ComponentScan(basePackages = {"com.example.demo", "com.example.demo.config"}) // Add the package containing JwtUtil
 public class Demo10Application {
 
     public static void main(String[] args) {

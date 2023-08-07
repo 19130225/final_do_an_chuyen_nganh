@@ -80,6 +80,7 @@ public class CartItem {
     private Integer quantity;
 
     private String img;
+    private int id_product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
@@ -90,21 +91,31 @@ public class CartItem {
     public CartItem() {
     }
 
-    public CartItem(Long id, String name, Double price, Integer quantity, String img, Cart cart) {
+    public CartItem(Long id, String name, Double price, Integer quantity, String img,int id_product, Cart cart) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.img = img;
+        this.id_product = id_product;
         this.cart = cart;
+    }
+
+    public int getId_product() {
+        return id_product;
+    }
+
+    public void setId_product(int id_product) {
+        this.id_product = id_product;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Long setId(Long id) {
         this.id = id;
+        return id;
     }
 
     public String getName() {
